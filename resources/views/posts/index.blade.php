@@ -2,6 +2,13 @@
 @section('content')
     <main>
         <div class="overflow-x-auto w-full py-12">
+        <div class="mx-auto w-3/5 flex justify-between items-center px-5 pb-4">
+                <div>
+                    <h1 class="text-lg font-semibold my-2">Welcome to our community</h1>
+                    <p class="text-gray-500 text-base">This is a list of all the posts that are available now, feel free to read anyone you would like.</p>
+                </div>
+                <button type="button" class="font-medium text-white bg-gradient-to-r rounded-md from-cyan-500 to-blue-700 px-4 py-3 shadow-lg shadow-blue-500/50 hover:bg-gradient-to-br" onclick="window.location.href='{{ route('posts.create') }}'">Add New Post</button>
+            </div>
             @if ($message = session('message'))
                 <div class="mx-auto w-3/5 flex p-4 my-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50" role="alert">
                     <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>

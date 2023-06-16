@@ -11,7 +11,7 @@
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 outline-none
         @error('title') bg-red-50 border-red-500 text-red-900 placeholder-red-700 @enderror"
         placeholder="John Doe"
-        value="{{ old('title', $post->title) }}"
+        value="{{ $post->title ?? old('title') }}"
     />
     @error('title')
     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
@@ -20,24 +20,23 @@
 <div class="w-[580px]">
     <label for="body" class="block mb-2 text-sm font-medium text-gray-900">Your post body</label>
     <textarea id="body" name="body" rows="10" class=" @error('body') bg-red-50 border-red-500 text-red-900 placeholder-red-700 @enderror block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Write your thoughts here...">
-        {{old('body', $post->body ) }}
+        {{ $post->body ?? old('body' ) }}
     </textarea>
     @error('body')
     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
     @enderror
 </div>
 <div class="w-[580px]">
-    <label for="filiere" class="block mb-2 text-sm font-medium text-gray-900"
-    >Filiere</label
+    <label for="category" class="block mb-2 text-sm font-medium text-gray-900"
+    >Category</label
     >
     <select
-        name="filiere_id"
-        id="filiere"
-        class="bg-gray-50 border @if (!isset($post)) cursor-not-allowed @endif border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-        @if (!isset($post)) disabled @endif
+        name="category_id"
+        id="category"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
     >
         @foreach ($categories as $item )
-            <option @if($item->id === $post->category_id) selected @endif value="{{ $item->id }}"> {{ $item->title }} </option>
+            <option @if(isset($post) && $item->id === $post->category_id) selected @endif value="{{ $item->id }}"> {{ $item->title }} </option>
         @endforeach
     </select>
 </div>

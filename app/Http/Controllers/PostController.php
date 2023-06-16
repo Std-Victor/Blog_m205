@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -21,15 +22,19 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create', ['categories' => Category::all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        $data = $request->validated();
+        Post::create($data);
+        return redirect()->back()->with([
+            'message' => 'the article has been stored.'
+        ]);
     }
 
     /**
@@ -46,6 +51,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $post = Post::findOrFail($post->id);
         $categories = Category::all();
         return view('posts.edit', compact('post', 'categories'));
     }
@@ -53,9 +59,13 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        dd($request);
+        $data = $request->validated();
+        Post::where('id', $post->id)->update($data);
+        return redirect()->back()->with([
+            'message' => 'the post has been updated.'
+        ]);
     }
 
     /**
@@ -63,6 +73,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post = Post::findOrFail($post->id);
+        $post->delete();
+        return redirect()->back()->with([
+            'message' => 'the post has been deleted.'
+        ]);
     }
 }
